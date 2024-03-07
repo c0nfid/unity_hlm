@@ -63,7 +63,7 @@ public class PlayerWeaponManager : MonoBehaviour
                     if (shoot)
                     {
                         Debug.Log("wwww2");
-                        StartCoroutine("shooting", 1f);
+                        break; //fsdfsd
                     }
                     break;
                 default:

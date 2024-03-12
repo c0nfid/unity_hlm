@@ -24,6 +24,7 @@ public class CameraSC : MonoBehaviour
     Transform player;
 
     private bool followPlayer;
+    private float mapMinX, mapMaxX, mapMinY, mapMaxY;
     Camera cam;
 
     GameObject pl;
@@ -78,6 +79,22 @@ public class CameraSC : MonoBehaviour
         {
             transform.position = new Vector3(player.position.x, player.position.y, transform.position.z);
         }
+    }
+
+    private Vector3 ClampCamera(Vector3 targetPosition)
+    {
+        float camHeight = cam.orthographicSize;
+        float camWidth = cam.orthographicSize * cam.aspect;
+
+        float minX = mapMinX - camWidth;
+        float maxX = mapMaxX + camWidth;
+        float minY = mapMinY + camHeight;
+        float maxY = mapMaxY + camHeight;
+
+        float newX = Clamp(targetPosition.x, minX, maxX);
+        float newY = Clamp(targetPosition.y, minY, maxY);
+
+        return new Vector3(newX, newY, targetPosition.z);
     }
     public static bool IsVisibleFrom(Renderer renderer, Camera camera)
     {

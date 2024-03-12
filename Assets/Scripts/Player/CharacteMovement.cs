@@ -7,7 +7,7 @@ public class CharacteMovement : MonoBehaviour
     Rigidbody2D rb;
     public float speed;
     public Animator anim;
-
+    
     float x;
     float y;
 
@@ -24,7 +24,7 @@ public class CharacteMovement : MonoBehaviour
     {
         rb = GetComponent<Rigidbody2D>();
         cam = Camera.main;
-        anim = GetComponent<Animator>();    
+        anim = GetComponent<Animator>();
     }
 
     // Update is called once per frame

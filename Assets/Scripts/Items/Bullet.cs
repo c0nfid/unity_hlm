@@ -14,10 +14,10 @@ public class Bullet : MonoBehaviour
         Destroy(gameObject, 5f);
     }
 
-    private void OnTriggerEnter2D(Collider2D collider)
+    private void OnTriggerStay2D(Collider2D collider)
     {
         Debug.Log("Triggering");
-        if (collider.GetComponent<EnemyOptionsScript>())
+        if (collider.tag == "Enemy")
         {
             Debug.Log("Enemy hit!");
             Destroy(gameObject);

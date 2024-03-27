@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class EnemyOptionsScript : MonoBehaviour
 {
+    public int HP;
     // Start is called before the first frame update
     void Start()
     {
@@ -16,3 +17,12 @@ public class EnemyOptionsScript : MonoBehaviour
         
     }
 }
+        //PlayerDetect();
+    }
+    private void FixedUpdate()
+    {
+        if (HP == 0)
+        {
+            Destroy(gameObject);
+        }
+    }

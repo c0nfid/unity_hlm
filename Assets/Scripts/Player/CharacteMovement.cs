@@ -7,6 +7,10 @@ public class CharacteMovement : MonoBehaviour
     Rigidbody2D rb;
     public float speed;
     public Animator anim;
+
+    private Light light;
+    public float minIntensity = 0.9f;
+    public float maxIntensity = 1.5f;
     
     float x;
     float y;
@@ -17,6 +21,7 @@ public class CharacteMovement : MonoBehaviour
     Vector3 direct;
 
     Camera cam;
+    private float timer;
     
 
     // Start is called before the first frame update
@@ -25,14 +30,30 @@ public class CharacteMovement : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         cam = Camera.main;
         anim = GetComponent<Animator>();
+        light = GameObject.FindGameObjectWithTag("Light").gameObject.GetComponent<Light>();
     }
 
     // Update is called once per frame
     void Update()
     {
         InputManager();
+        changeLight();
     }
 
+    void changeLight()
+    {
+        timer += Time.deltaTime;
+        if (timer >= 1f)
+        {
+            timer = 0.0f;
+        }
+        else if ((timer <= 0.7f && timer >= 0.1f) | (timer > 0.8f && timer <= 1f))
+        {
+            light.intensity = Random.Range(minIntensity, maxIntensity);
+        }
+        
+    }
+    
     public void /// <summary>
     /// This function is called every fixed framerate frame, if the MonoBehaviour is enabled.
     /// </summary>

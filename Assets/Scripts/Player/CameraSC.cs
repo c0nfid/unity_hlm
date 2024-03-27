@@ -30,6 +30,19 @@ public class CameraSC : MonoBehaviour
     GameObject pl;
 
     Vector3 dir;
+    // s
+    public Color targetColor = new Color32(50, 53, 99, 255);
+    public float duration = 10f;
+
+    
+    public Color color1 = new Color32(111, 20, 106, 255);
+    public Color color2 = new Color32(50, 53, 99, 255);
+    public Color color3 = new Color32(0, 112, 109, 255);
+    
+    private float elapsedTime;
+    private bool too = false;
+    private Color startColor;
+    // e
     // Start is called before the first frame update
     void Start()
     {
@@ -38,6 +51,10 @@ public class CameraSC : MonoBehaviour
         cam = Camera.main;
         pl = GameObject.FindGameObjectWithTag("Player");
         dir = new Vector3(player.position.x, player.position.y, transform.position.z);
+        //s
+        startColor = new Color32(111, 20, 106, 255);
+        Camera.main.backgroundColor = startColor;
+        //e
     }
     
     // Update is called once per frame
@@ -84,6 +101,51 @@ public class CameraSC : MonoBehaviour
         {
             transform.position = new Vector3(player.position.x, player.position.y, transform.position.z);
         }
+        
+        //s
+        if ((elapsedTime < duration))
+        {
+            elapsedTime += Time.deltaTime;
+            Camera.main.backgroundColor = Color.Lerp(startColor, targetColor, elapsedTime / duration);
+
+        }
+        else
+        {
+            elapsedTime = 0f;
+            SetNextColor();
+        }
+        
+        //e
+    }
+    void SetNextColor()
+    {
+        startColor = Camera.main.backgroundColor;
+        if (!too)
+        {
+            if (startColor == color1)
+                targetColor = color2;
+            else if (startColor == color2)
+                targetColor = color3;
+            else
+            {
+                startColor = color3;
+                targetColor = color2;
+                too = true;
+            }
+        }
+        else
+        {
+            if (startColor == color3)
+                targetColor = color2;
+            else if (startColor == color2)
+                targetColor = color1;
+            else
+            {
+                startColor = color1;
+                targetColor = color2;
+                too = false; 
+            }
+    }
     }
 
     private Vector3 ClampCamera(Vector3 targetPosition)

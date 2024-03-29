@@ -11,7 +11,9 @@ public class CharacteMovement : MonoBehaviour
     private Light light;
     public float minIntensity = 0.9f;
     public float maxIntensity = 1.5f;
-    
+
+    public int HP;
+    public bool isDead = false;
     float x;
     float y;
 
@@ -31,6 +33,7 @@ public class CharacteMovement : MonoBehaviour
         cam = Camera.main;
         anim = GetComponent<Animator>();
         light = GameObject.FindGameObjectWithTag("Light").gameObject.GetComponent<Light>();
+        HP = 100;
     }
 
     // Update is called once per frame
@@ -63,6 +66,8 @@ public class CharacteMovement : MonoBehaviour
             MovementManager();
         }
         RotationCharacter();
+        if (HP <= 0)
+            isDead = true;
     }
 
     void InputManager()

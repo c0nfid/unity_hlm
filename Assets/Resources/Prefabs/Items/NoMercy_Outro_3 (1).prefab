@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 7440290063174975878}
   - component: {fileID: 4249254700087094837}
   - component: {fileID: 3509763789253754355}
-  m_Layer: 8
+  m_Layer: 10
   m_Name: NoMercy_Outro_3 (1)
   m_TagString: other
   m_Icon: {fileID: 0}

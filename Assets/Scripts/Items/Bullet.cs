@@ -9,6 +9,8 @@ public class Bullet : MonoBehaviour
     [SerializeField] private float speed;
 
     [SerializeField] private int damage;
+
+    public bool isEnemy = false;
     // Start is called before the first frame update
 
     // Update is called once per frame
@@ -20,11 +22,16 @@ public class Bullet : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D other)
     {
-        if (other.gameObject.tag == "Enemy")
+        if (!isEnemy && other.gameObject.tag == "Enemy")
         {
             attacked = other.gameObject.GetComponent<EnemyOptionsScript>();
             attacked.HP -= damage;
             Debug.Log("Enemy");
+            Destroy(gameObject);
+        } else if (isEnemy && other.gameObject.tag == "Player")
+        {
+            other.gameObject.GetComponent<CharacteMovement>().HP -= damage;
+            Debug.Log("Player");
             Destroy(gameObject);
         }
         if (other.gameObject.tag == "other")

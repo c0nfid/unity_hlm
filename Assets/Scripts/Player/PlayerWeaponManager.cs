@@ -82,6 +82,7 @@ public class PlayerWeaponManager : MonoBehaviour
     IEnumerator shootingUZI(float time)
     {
         Instantiate(Resources.Load("Prefabs/Items/" + currentWeaponType + "_Bullet"), bullet_Spawn.position, bullet_Spawn.rotation);
+        
         yield return new WaitForSeconds((float)0.1);
         Instantiate(Resources.Load("Prefabs/Items/" + currentWeaponType + "_Bullet"), bullet_Spawn.position, bullet_Spawn.rotation);
         yield return new WaitForSeconds((float)0.1);
@@ -105,3 +106,4 @@ public class PlayerWeaponManager : MonoBehaviour
         bullet_Spawn.GetComponent<BoxCollider2D>().enabled = false;
     }
 }
+

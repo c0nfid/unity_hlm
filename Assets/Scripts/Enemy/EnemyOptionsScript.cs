@@ -105,7 +105,7 @@ public class EnemyOptionsScript : MonoBehaviour
 
         if (enemyType == EnemyType.patrul)
         {
-            speed = 2f;
+            speed = 1f;
 
             if (hit2.collider != null)
             {

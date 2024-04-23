@@ -17,8 +17,10 @@ public class EnemyNavMesh : MonoBehaviour
     private RaycastHit2D hit;
     private Vector3 playerLastPos;
     private float playerVelocityAngle;
-    
-    
+    [SerializeField]
+    public bool haveGun = false;
+
+    public bool shoot = false;
     
     private Vector3 lastKnownPosition;
     private bool targetVisible = false;
@@ -43,17 +45,34 @@ public class EnemyNavMesh : MonoBehaviour
         float angle = Mathf.Atan2(velocity.y, velocity.x) * Mathf.Rad2Deg;
         if (targetVisible)
         {
-            agent.SetDestination(target.position);
-            agent.updatePosition = true;
-            
+            if (Vector3.Distance(transform.position, target.position) <= 1.5f && haveGun)
+            {
+                agent.velocity = Vector3.zero;
+                agent.SetDestination(transform.position);
+                shoot = true;
+            }
+            else if (Vector3.Distance(transform.position, target.position) <= 0.371f && !haveGun)
+            {
+                agent.velocity = Vector3.zero;
+                agent.SetDestination(transform.position);
+                shoot = true;
+                Debug.Log("ShootStick");
+            }
+            else
+            {
+                Debug.Log("Go to man" + Vector3.Distance(transform.position, lastKnownPosition));
+                shoot = false;
+                agent.SetDestination(target.position);
+                agent.updatePosition = true;
+            }
         }
         else
         {
-            Debug.Log(lastKnownPosition != Vector3.zero);
+            //Debug.Log(lastKnownPosition != Vector3.zero);
             if (lastKnownPosition != Vector3.zero)
             {
                 agent.SetDestination(lastKnownPosition);
-                Debug.Log(Vector3.Distance(transform.position, lastKnownPosition));
+                //Debug.Log(Vector3.Distance(transform.position, lastKnownPosition));
             }
         }
 
@@ -63,12 +82,17 @@ public class EnemyNavMesh : MonoBehaviour
         }
         else
         {
-            if (Vector3.Distance(transform.position, lastKnownPosition) <= 1f)
+            if (Vector3.Distance(transform.position, lastKnownPosition) <= 1f && !shoot && !targetVisible)
             {
                 transform.rotation = Quaternion.AngleAxis(playerVelocityAngle, Vector3.forward);
                 agent.updatePosition = false;
             }
+            else if (shoot)
+            {
+                transform.eulerAngles = new Vector3(0, 0, Mathf.Atan2((target.position.y - transform.position.y), (target.position.x - transform.position.x)) * Mathf.Rad2Deg);
+            }
         }
+        
         // RayTrack();
         // {
         //     if (hit.collider.gameObject.layer == 9)

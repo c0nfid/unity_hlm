@@ -11,6 +11,10 @@ public class HandsWeaponTrigger : MonoBehaviour
         {
             Debug.Log("Enemy hit!");
         }
+        if (collider.GetComponent<PlayerWeaponManager>())
+        {
+            Debug.Log("Player hit!");
+        }
         
         if (collider.tag == "other")
         {

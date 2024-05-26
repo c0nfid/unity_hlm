@@ -1,7 +1,9 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using Random = UnityEngine.Random;
 
 public class Background : MonoBehaviour
 {
@@ -11,6 +13,14 @@ public class Background : MonoBehaviour
     {
         Image img = GetComponent<Image>();
         img.sprite = GetRandomSprite();
+        
+    }
+
+    private void Awake()
+    {
+        Application.targetFrameRate = -1;
+        // Limit the framerate to 60
+        Application.targetFrameRate = 60;
     }
 
     Sprite GetRandomSprite()

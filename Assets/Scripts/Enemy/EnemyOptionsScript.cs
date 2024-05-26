@@ -51,39 +51,50 @@ public class EnemyOptionsScript : MonoBehaviour
     public Transform check;
 
     public bool shooting;
-    
+
+    private ScoreController ScoreC;
     //
     public int HP;
+
+    private bool isDead = false;
     // Start is called before the first frame update
     void Start()
     {
-        if (weaponType == WeaponType.hand)
-            weaponID = 0;
-        if (weaponType == WeaponType.STICK)
-            weaponID = 1;
-        if (weaponType == WeaponType.UZI)
-            weaponID = 2;
-
-        SR = GetComponent<SpriteRenderer>();
-        SR.sprite = w_sprites[weaponID];
-        player = GameObject.FindGameObjectWithTag("Player");
-        playerLastPos = transform.position;
-        rb = GetComponent<Rigidbody2D>();
-        layermask = ~layermask;
+        ScoreC = FindObjectOfType<ScoreController>();
+        // if (weaponType == WeaponType.hand)
+        //     weaponID = 0;
+        // if (weaponType == WeaponType.STICK)
+        //     weaponID = 1;
+        // if (weaponType == WeaponType.UZI)
+        //     weaponID = 2;
+        //
+        // SR = GetComponent<SpriteRenderer>();
+        // SR.sprite = w_sprites[weaponID];
+        // player = GameObject.FindGameObjectWithTag("Player");
+        // playerLastPos = transform.position;
+        // rb = GetComponent<Rigidbody2D>();
+        // layermask = ~layermask;
     }
 
     // Update is called once per frame
     void Update()
     {
-        Movement();
-        PlayerDetect();
+        // Movement();
+        // PlayerDetect();
     }
 
     private void FixedUpdate()
     {
-        if (HP == 0)
+        if (HP < 0 && !isDead)
         {
-            Destroy(gameObject);
+            moving = false;
+            
+            gameObject.GetComponent<EnemyAnimation>().EnemyRigid.isStopped = true;
+            gameObject.GetComponent<EnemyAnimation>().tors.sprite = gameObject.GetComponent<EnemyAnimation>().death;
+            gameObject.GetComponent<BoxCollider2D>().enabled = false;
+            ScoreC.Score += 100;
+            isDead = true;
+            //Destroy(gameObject);
         }
     }
 

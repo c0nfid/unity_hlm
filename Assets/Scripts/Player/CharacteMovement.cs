@@ -4,6 +4,11 @@ using UnityEngine;
 
 public class CharacteMovement : MonoBehaviour
 {
+    public AudioSource source;
+    public AudioClip clip;
+    public GameObject DeadWindow;
+    
+    
     Rigidbody2D rb;
     public float speed;
     public Animator anim;
@@ -12,7 +17,7 @@ public class CharacteMovement : MonoBehaviour
     public float minIntensity = 0.9f;
     public float maxIntensity = 1.5f;
 
-    public int HP;
+    public int HP = 100;
     public bool isDead = false;
     float x;
     float y;
@@ -67,7 +72,13 @@ public class CharacteMovement : MonoBehaviour
         }
         RotationCharacter();
         if (HP <= 0)
+        {
             isDead = true;
+            DeadWindow.SetActive(true);
+            source.PlayOneShot(clip);
+            Time.timeScale = 0f;
+            
+        }
     }
 
     void InputManager()

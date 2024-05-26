@@ -298,6 +298,27 @@ TextureImporter:
       indices: 
       edges: []
       weights: []
+    - serializedVersion: 2
+      name: Enemies_9
+      rect:
+        serializedVersion: 2
+        x: 831
+        y: 885
+        width: 53
+        height: 27
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b6601269d7500d847b4659ac4327a4e0
+      internalID: -2052654963
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     physicsShape: []
     bones: []
@@ -318,6 +339,7 @@ TextureImporter:
       Enemies_6: 347365004
       Enemies_7: -1271390844
       Enemies_8: -880465539
+      Enemies_9: -2052654963
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

@@ -22,13 +22,13 @@ public class Bullet : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D other)
     {
-        if (!isEnemy && other.gameObject.tag == "Enemy")
+        if (other.gameObject.tag == "Enemy")
         {
             attacked = other.gameObject.GetComponent<EnemyOptionsScript>();
             attacked.HP -= damage;
             Debug.Log("Enemy");
             Destroy(gameObject);
-        } else if (isEnemy && other.gameObject.tag == "Player")
+        } else if (other.gameObject.tag == "Player")
         {
             other.gameObject.GetComponent<CharacteMovement>().HP -= damage;
             Debug.Log("Player");

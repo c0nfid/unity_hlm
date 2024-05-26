@@ -16,6 +16,7 @@ public class EnemyWeaponManager : MonoBehaviour
     
     public WeaponType weaponType;
 
+    private EnemyOptionsScript HP_O;
     [SerializeField] private int weaponID;
     public Transform bullet_Spawn;
     
@@ -26,6 +27,7 @@ public class EnemyWeaponManager : MonoBehaviour
     void Start()
     {
         currentWeaponType = weaponType.ToString();
+        HP_O = gameObject.GetComponent<EnemyOptionsScript>();
         if (weaponType == WeaponType.STICK)
             weaponID = 0;
         if (weaponType == WeaponType.UZI)
@@ -46,21 +48,21 @@ public class EnemyWeaponManager : MonoBehaviour
         switch (ID)
         {
             case 0:
-                if (shoot.shoot)
+                if (shoot.shoot && HP_O.HP > 0)
                 {
                     Debug.Log("Bite");
                     if (!waitShoot) HandedTrigger();
                 }
                 break;
             case 1:
-                if (shoot.shoot)
+                if (shoot.shoot && HP_O.HP > 0)
                 {
                     Debug.Log("wwww1");
                     if (!waitShoot) StartCoroutine("shooting", 0.2f);
                 }
                 break;
             case 2:
-                if (shoot.shoot)
+                if (shoot.shoot && HP_O.HP > 0)
                 {
                     Debug.Log("wwww2");
                     break; //fsdfsd

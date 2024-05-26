@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -21,7 +22,12 @@ public class EnemyNavMesh : MonoBehaviour
     public bool haveGun = false;
 
     public bool shoot = false;
+
+    [SerializeField] private bool Patrul = false;
+    [SerializeField] private List<Transform> points;
+    private int currentPoint = 0;
     
+    private EnemyOptionsScript HP_O;
     private Vector3 lastKnownPosition;
     private bool targetVisible = false;
     // Start is called before the first frame update
@@ -31,7 +37,7 @@ public class EnemyNavMesh : MonoBehaviour
         agent.updateRotation = false;
         agent.updateUpAxis = false;
         destination = target.position;
-        
+        HP_O = gameObject.GetComponent<EnemyOptionsScript>();
         playerLastPos = transform.position;
         layermask = ~layermask;
         lastKnownPosition = Vector3.zero;
@@ -43,7 +49,7 @@ public class EnemyNavMesh : MonoBehaviour
         CheckVisibility();
         Vector3 velocity = agent.velocity;
         float angle = Mathf.Atan2(velocity.y, velocity.x) * Mathf.Rad2Deg;
-        if (targetVisible)
+        if (targetVisible && HP_O.HP > 0)
         {
             if (Vector3.Distance(transform.position, target.position) <= 1.5f && haveGun)
             {
@@ -74,6 +80,24 @@ public class EnemyNavMesh : MonoBehaviour
                 agent.SetDestination(lastKnownPosition);
                 //Debug.Log(Vector3.Distance(transform.position, lastKnownPosition));
             }
+            else
+            {
+                if (Patrul && points.Count > 0)
+                {
+                    agent.SetDestination(points[currentPoint].position);
+                    if (Vector3.Distance(transform.position, points[currentPoint].position) <= 0.5f)
+                        currentPoint += 1;
+
+                    if (currentPoint + 1 > points.Count)
+                        currentPoint = 0;
+                    Debug.Log(currentPoint);
+                    Debug.Log("COUNT" + points.Count);
+                }
+                else
+                {
+                    
+                }
+            }
         }
 
         if (velocity != Vector3.zero)
@@ -87,7 +111,7 @@ public class EnemyNavMesh : MonoBehaviour
                 transform.rotation = Quaternion.AngleAxis(playerVelocityAngle, Vector3.forward);
                 agent.updatePosition = false;
             }
-            else if (shoot)
+            else if (shoot && HP_O.HP > 0)
             {
                 transform.eulerAngles = new Vector3(0, 0, Mathf.Atan2((target.position.y - transform.position.y), (target.position.x - transform.position.x)) * Mathf.Rad2Deg);
             }
